@@ -28,7 +28,7 @@ class Subspace (X : Type u) [TX : Topology X] where
   /- Top(T,S) ≅ {f : T → S | incl ∘ f : T → X continuous }. -/
   char_Subspace {T : Type u} (TT: Topology T) (f : T → S) : Cont f ↔ Cont (incl ∘ f)
 
-variable {X : Type u} [TX : Topology X] {S : Type u} [TS : Topology S]
+variable {X : Type u} [TX : Topology X]
 
 theorem Cont_incl [sub : Subspace X] : @Cont sub.S X sub.TS TX (sub.incl) := by
   have h : sub.incl ∘ id = sub.incl := by
@@ -99,7 +99,7 @@ instance pullbackTopology (X : Type u) (TX : Topology X) (S : Type u) (f : S →
         use f ⁻¹' V
         exact ⟨hV1, hV2⟩
 
-instance Subspace_subspaceTopology (incl : S → X) (inj : Function.Injective incl)
+instance Subspace_pullbackTopology {S : Type u} (incl : S → X) (inj : Function.Injective incl)
   : Subspace X where
     S := S
     TS := pullbackTopology X TX S incl
@@ -137,7 +137,7 @@ instance pushforwardTopology
     Open_sUnion := by
       sorry -- hint : Open_preimageUnion
 
-instance Quotient_quotientTopology
+instance Quotient_pushforwardTopology
   {Q : Type u} (qmap : X → Q) (surj : Function.Surjective qmap)
   : Quotient X where
     Q := Q

@@ -108,9 +108,20 @@ end
 variable [Topology X] [BY : Basis Y]
 
 theorem Cont_Basics (f : X → Y) : Cont f ↔ ∀ b ∈ BY.Basics, Open (f ⁻¹' b) := by
-  /-
-    (=>) use `Open_Basics`
-    (<=) use `IsBasis_basisTopology` to decompose open U into union of basis element.
-    Then use properties of preimages `Set.preimage_sUnion` and `Set.sUnion_image`.
-  -/
-  sorry
+  constructor
+  case mp =>
+    intro cont_f b basic_b
+    apply cont_f
+    exact Open_Basics b basic_b
+  case mpr =>
+    intro h U open_U
+    have w : ∃ C ⊆ BY.Basics, U = ⋃₀ C :=
+      IsBasis_basisTopology.right U open_U
+    obtain ⟨C, hC1, hC2⟩ := w
+    rw [hC2]
+    rw [Set.preimage_sUnion, ← Set.sUnion_image]
+    apply Open_sUnion
+    simp only [Set.mem_image, forall_exists_index, and_imp, forall_apply_eq_imp_iff₂]
+    intro V hV
+    apply hC1 at hV
+    exact h V hV

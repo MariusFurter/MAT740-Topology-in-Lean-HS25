@@ -30,19 +30,29 @@ Also helpful:
 open Metric
 
 theorem ball_in_ball {x : X} {ε : ℝ} : ∀ y ∈ ball x ε, ∃ δ, (0 < δ ∧ ball y δ ⊆ ball x ε) := by
-  sorry
-  /-
-  use `linarith` and `dist_triangle`
-  -/
-
+  simp only [ball, Set.setOf_subset_setOf]
+  intro y hy
+  simp at hy
+  use ε - (dist y x)
+  constructor
+  case left =>
+    linarith
+  case right =>
+    intro z hz
+    have hzyx : dist z y + dist y x < ε := by
+      linarith
+    have triangle : dist z x ≤ dist z y + dist y x := by
+      apply dist_triangle
+    linarith
 
 instance metricBasis : Basis X where
   Basics := {B | ∃ x ε, B = ball x ε}
   Basis_cover := by
-    sorry
-    /-
-    use `simp?` here to get a short proof
-    -/
+    rw [Set.sUnion_eq_univ_iff]
+    intro a
+    use Metric.ball a 1
+    simp only [Set.mem_setOf_eq, exists_apply_eq_apply2', mem_ball, dist_self, zero_lt_one,
+      and_self]
   Basis_inter := by
     intro b1 hb1 b2 hb2 x hx
     rw [Set.mem_setOf_eq] at hb1
