@@ -58,23 +58,6 @@ theorem Cont_comp (f : X → Y) (g : Y → Z) (cf : Cont f) (cg : Cont g) : Cont
   specialize cf (g ⁻¹' U) cg
   exact cf
 
-/- Continuity is local. -/
-theorem Cont_local (f : X → Y) :
-  Cont (restrict univ f) ↔ ∀ x : X, ∃ U : Set X, ∃ w : Open U, Nbhd U x ∧ Cont (restrict U f) := by
-    constructor
-    case mp =>
-      intro cont_f x
-      use univ
-      use Open_univ
-      constructor
-      case left => simp only [Nbhd, Open_univ, mem_univ, and_self]
-      case right => exact cont_f
-    case mpr =>
-      intro h V open_V
-      choose U hU using h
-      -- have w : univ.restrict f⁻¹' V = ⋃ x ∈ X, U x :=  sorry
-      sorry
-
 end
 
 /- ## Special types of continuous functions -/

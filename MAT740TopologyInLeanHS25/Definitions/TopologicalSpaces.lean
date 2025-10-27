@@ -55,9 +55,19 @@ theorem Open_iUnion
     exact h
 
 @[simp]
-theorem Open_biUnion {A : Set (Set X)} (h : ∀ a ∈ A, Open (a)) : Open (⋃ a ∈ A, a) := by
+theorem Open_biUnion {A : Set (Set X)} (h : ∀ a ∈ A, Open (a))
+  : Open (⋃ a ∈ A, a) := by
   rw [← sUnion_eq_biUnion]
   apply Open_sUnion
+  exact h
+
+@[simp]
+theorem Open_preimageUnion
+   {Z : Type u} {A : Set (Set Z)} {f : X → Z} (h : ∀ a ∈ A, Open (f ⁻¹' a))
+  : Open (⋃ a ∈ A, f ⁻¹' a) := by
+  rw [← @sUnion_image]
+  apply Open_sUnion
+  simp only [mem_image, forall_exists_index, and_imp, forall_apply_eq_imp_iff₂]
   exact h
 
 @[simp]
