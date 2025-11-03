@@ -21,10 +21,13 @@ We can think of such a term as
 -/
 
 /- Product notation is defined in Mathlib (e.g. Mathlib.Tactic) -/
-#check Π i : I, X i  -- (\P) or (\Pi)
+#check Π i : I, X i -- (\P) or (\Pi)
 #check Π i, X i
 
-/- The universal quantifier is a special case when the collection of tyes are propositions. -/
+/- The universal quantifier is a special case when the collection of tyes are propositions.
+
+Giving a term of `t : ∀ i, X i` requires providing a term `t i : X i` for every `(i : I)`.
+-/
 #check ∀ i, X i
 
 /- ## Binary products as structures
@@ -53,6 +56,7 @@ inductive Prod'' (α : Type u) (β : Type v)
 /- You can construct terms `t : X₁ × X₂` using `Prod.mk x1 x2` or equivalently `⟨x1, x2⟩`.
 
 The projections are named `fst` and `snd`.
+E.g `x = ⟨x.fst, x.snd⟩ = ⟨x.1, x.2⟩`
 -/
 
 
@@ -78,7 +82,7 @@ section Sums
 #check Σ i, X i
 #check (i : I) × X i
 
-/- A term `t : Σ i, X i` has the form `⟨j, xj⟩`, where `j : J` and `xj : X j`.
+/- A term `t : Σ i, X i` has the form `⟨j, xj⟩`, where `j : I` and `xj : X j`.
 
 We can think of `Σ i, X i` as
 - the disjoint union `⨿ i, X i`
@@ -91,12 +95,15 @@ variable (j : I) (xj : X j)
 #check Sigma.mk
 #check Sigma.mk j xj
 
-/- The existential quantifier `∃` is a special case where the collection of types are propositions. -/
+/- The existential quantifier `∃` is a special case where the collection of types are propositions.
+
+Providing a term `t : Σ i, P i` requires providing a single tuple `⟨i ,h i⟩`, where `i : I` and `h i : P i` is a proof that `P` holds for `i`.
+-/
 variable (P : I → Prop)
 #check ∃ i, P i
 
 /- ## Binary sums as inductive types
-Binary sums `X₁ ⊕ X₂` can be thought of as a dependent sum over the collection `X : 2 → Type*`.
+Binary sums `X₁ ⊕ X₂` (\oplus) can be thought of as a dependent sum over the collection `X : 2 → Type*`.
 
 Lean defines `Sum X₁ X₂` (as an inductive type) for binary sums which you can write `X₁ ⊕ X₂`.
 
