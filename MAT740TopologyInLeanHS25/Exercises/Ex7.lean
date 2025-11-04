@@ -3,9 +3,9 @@ import MAT740TopologyInLeanHS25.Definitions.TopologicalSpaces
 import MAT740TopologyInLeanHS25.Definitions.NewSpaces
 
 section Ex1
-variable (I : Type) (J : I → Type) (X : (i : I) → J i → Prop)
+variable (I : Type) (J : I → Type) (P : (i : I) → J i → Prop)
 
-theorem dist_quant : (∀ i, ∃ j : J i, X i j) ↔ (∃ c : (i : I) → J i, ∀ i, X i (c i)) := by
+theorem dist_quant : (∀ i, ∃ j : J i, P i j) ↔ (∃ c : (i : I) → J i, ∀ i, P i (c i)) := by
   sorry -- hint: use the `choose` tactic
 
 end Ex1
