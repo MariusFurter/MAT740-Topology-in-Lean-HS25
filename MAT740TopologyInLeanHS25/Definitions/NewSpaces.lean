@@ -253,7 +253,14 @@ class iCoproductSpace (I : Type u) (Xs : I → Type u) (TXs : I → Topology X) 
 
 instance coproductTopology (X : Type u) [TX : Topology X] (Y : Type u) [TY : Topology Y] : Topology (X ⊕ Y) where
   Open := {B | Open (Sum.inl ⁻¹' B) ∧ Open (Sum.inr ⁻¹' B)}
-  Open_univ := by sorry
+  Open_univ := by
+    have l : Open (Sum.inl ⁻¹' (Set.univ : Set (X ⊕ Y))) := by
+      rw [Set.preimage_univ]
+      exact Open_univ
+    have r : Open (Sum.inr ⁻¹' (Set.univ : Set (X ⊕ Y))) := by
+      rw [Set.preimage_univ]
+      exact Open_univ
+    exact ⟨l,r⟩
   Open_inter := by sorry
   Open_sUnion := by sorry
 
