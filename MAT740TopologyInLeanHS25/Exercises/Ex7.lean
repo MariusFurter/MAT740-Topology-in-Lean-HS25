@@ -37,4 +37,10 @@ instance dist_type : (Π i, Σ j : J i, X i j) ≃ (Σ c : (i : I) → J i, Π i
   left_inv := sorry
   right_inv := sorry
 
+/- Hint: You can either define toFun and invFun
+1) using anonymous functions
+2) using tactics mode.
+If you use anonymous functions, you can type `_` to see the context and what type lean expects.
+-/
+
 end Bonus
