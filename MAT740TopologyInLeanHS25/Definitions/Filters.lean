@@ -15,6 +15,9 @@ variable {X Y : Type*} {F G : Filter X} {A B : Set X}
 instance instMembership : Membership (Set X) (Filter X) where
   mem := fun F U ↦ U ∈ F.Sets
 
+instance instSubset : HasSubset (Filter X) where
+  Subset := fun F G ↦ F.Sets ⊆ G.Sets
+
 theorem filter_eq : ∀ {F G : Filter X}, F.Sets = G.Sets → F = G := by
   intro F G h
   cases F
@@ -167,8 +170,7 @@ theorem Hausdorff_unique_limits [TX : Topology X]
           simp only [Nbhd, Open_univ, Set.mem_univ, and_self,
           Set.univ_inter, subset_refl, and_true, true_and]
           exact ⟨hN.1,hN.2⟩
-        use x
-        use y
+        use x; use y
       use F
 
 def NbhdFilter [Topology X] (x : X) : Filter X where

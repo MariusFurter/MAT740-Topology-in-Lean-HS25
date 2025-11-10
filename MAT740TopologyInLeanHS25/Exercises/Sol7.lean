@@ -14,7 +14,7 @@ theorem dist_quant : (∀ i, ∃ j : J i, P i j) ↔ (∃ c : (i : I) → J i, �
   case mpr =>
     intro h i
     obtain ⟨c, hc⟩ := h
-    use c i
+    use (c i)
     apply hc
 
 end Ex1
