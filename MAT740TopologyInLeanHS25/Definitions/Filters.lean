@@ -238,8 +238,6 @@ theorem Cont_convergence [Topology X] [Topology X] (f : X → Y)
           intro U hU
           have w1 : Nbhd U x := by
             exact hU
-          have w2 : U ⊆ U := by
-            trivial
           use U
         specialize h F x F_lim_x
         have w : f ⁻¹' U ∈ F := by

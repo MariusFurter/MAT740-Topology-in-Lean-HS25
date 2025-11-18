@@ -38,7 +38,10 @@ def zero : I := by
     case left => exact Preorder.le_refl 0
     case right => exact zero_le_one' ℝ
 
-def one : I := ⟨1, ⟨zero_le_one' ℝ, Preorder.le_refl 1⟩⟩
+def one : I where
+  val := 1
+  property := by
+    exact ⟨zero_le_one' ℝ, Preorder.le_refl 1⟩
 
 instance : MetricSpace I where
   dist := fun x y ↦ Real.metricSpace.dist x.val y.val
@@ -93,7 +96,6 @@ theorem Connected_PathConnected : PathConnected X → Connected X := by
   have connected_I := Connected_I
   specialize connected_I fp cont_fp
   obtain ⟨b, constant_fp⟩ := connected_I
-  rw [Constant] at constant_fp
   have c : f x = f y := by
     rw [← source_fp, ← target_fp, constant_fp one, constant_fp zero]
   contradiction
