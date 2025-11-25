@@ -3,6 +3,7 @@ import MAT740TopologyInLeanHS25.Definitions.TopologicalSpaces
 import MAT740TopologyInLeanHS25.Definitions.ContinuousFunctions
 import MAT740TopologyInLeanHS25.Definitions.MetricSpaces
 import MAT740TopologyInLeanHS25.Definitions.Bases
+import MAT740TopologyInLeanHS25.Definitions.NewSpaces
 
 namespace MyConnected
 
@@ -13,20 +14,53 @@ instance : Topology Prop := discreteTopology Prop
 def Connected (X : Type*) [Topology X] : Prop := ∀ f : X → Prop, Cont f → ∃ b, Constant f b
 
 theorem Connected_iff_nonSep : Connected X ↔ ∀ U V : Set X, Open U ∧ U.Nonempty ∧ Open V ∧ V.Nonempty ∧ Disjoint U V → U ∪ V ≠ Set.univ := by
-  sorry
+  constructor
+  case mp =>
+    contrapose!
+    intro h
+    obtain ⟨U,V,⟨open_U,open_V,disj_UV⟩,cover_UV⟩ := h
+    rw [Connected]
+    push_neg
+    let f x : Prop := x ∈ U
+    have cont_f : Cont f := by
+      sorry -- Points are basis. Preimages of True and False are U and V respectively
+    have w : ∀ b, ¬ Constant f b := by sorry
+    use f
+  case mpr =>
+    sorry
 
 theorem Disconnected_Prop : ¬(Connected Prop) := by
   rw [Connected]
   push_neg
   have cont_id : Cont (id : Prop → Prop) := Cont_id
   have non_const : ∀ b : Prop, ¬(Constant id b) := by
-    sorry -- exercise
+    intro b
+    rw [Constant]
+    push_neg
+    have w : b = True ∨ b = False := by
+        exact Classical.propComplete b
+    obtain c1|c2 := w
+    case inl =>
+      use False
+      rw [c1]
+      simp only [id_eq, ne_eq, eq_iff_iff, iff_true, not_false_eq_true]
+    case inr =>
+      use True
+      rw [c2]
+      simp only [id_eq, ne_eq, eq_iff_iff, iff_false, not_true_eq_false, not_false_eq_true]
   use id
-
 
 theorem Connected_image (f : X → Y) (surj_f : Function.Surjective f) (cont_f : Cont f)
   : Connected X → Connected Y := by
-    sorry -- exercise
+    intro connected_X k cont_k
+    specialize connected_X (k ∘ f) (Cont_comp f k cont_f cont_k)
+    obtain ⟨b, constant_kf⟩ := connected_X
+    use b
+    intro y
+    specialize surj_f y
+    obtain ⟨a,ha⟩ := surj_f
+    rw [← ha]
+    exact constant_kf a
 
 def I := {x : ℝ // 0 ≤ x ∧ x ≤ 1}
 
@@ -38,10 +72,7 @@ def zero : I := by
     case left => exact Preorder.le_refl 0
     case right => exact zero_le_one' ℝ
 
-def one : I where
-  val := 1
-  property := by
-    exact ⟨zero_le_one' ℝ, Preorder.le_refl 1⟩
+def one : I := ⟨1, ⟨zero_le_one' ℝ, Preorder.le_refl 1⟩⟩
 
 instance : MetricSpace I where
   dist := fun x y ↦ Real.metricSpace.dist x.val y.val
@@ -75,10 +106,14 @@ def PathConnected (X : Type*) [TX : Topology X] : Prop := ∀ x y : X, Nonempty 
 
 theorem PathConnected_image (f : X → Y) (surj_f : Function.Surjective f) (cont_f : Cont f)
   : PathConnected X → PathConnected Y := by
-    sorry -- exercise
-    /- Hints:
-      - Use `Classical.choice` the get a witness of `Nonempty _`.
-      - Use `constructor` to provide witness for `Nonempty _` -/
+    intro pathconnected_X u v
+    obtain ⟨x, hx⟩ := surj_f u
+    obtain ⟨y, hy⟩ := surj_f v
+    have pathX : Path x y := Classical.choice (pathconnected_X x y)
+    have pathY : Path (f x) (f y) := mapPath f cont_f pathX
+    rw [hx,hy] at pathY
+    constructor
+    exact pathY
 
 theorem Connected_I : Connected I := by sorry
 
@@ -96,6 +131,7 @@ theorem Connected_PathConnected : PathConnected X → Connected X := by
   have connected_I := Connected_I
   specialize connected_I fp cont_fp
   obtain ⟨b, constant_fp⟩ := connected_I
+  rw [Constant] at constant_fp
   have c : f x = f y := by
     rw [← source_fp, ← target_fp, constant_fp one, constant_fp zero]
   contradiction
