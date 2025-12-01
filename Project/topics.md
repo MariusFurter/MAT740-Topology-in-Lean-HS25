@@ -25,7 +25,7 @@ Define closure (Cl).
 
 # Connected spaces
 
-4. [Aroon, Äia]
+4. [Aroon, Äia + Leon]
 
 - Prove that the connected subsets of R are intervals.
 - Corollary: Intermediate value theorem.
