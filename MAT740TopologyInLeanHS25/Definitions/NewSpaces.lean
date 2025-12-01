@@ -239,7 +239,7 @@ class CoproductSpace (X : Type u) [Topology X] (Y : Type u) [Topology Y] where
   char_Coproduct {T : Type max u} (TT : Topology T) (f : (X ⊕ Y) → T) :
     Cont f ↔ Cont (f ∘ Sum.inl) ∧ Cont (f ∘ Sum.inr)
 
-class iCoproductSpace (I : Type u) (Xs : I → Type u) (TXs : I → Topology X) where
+class iCoproductSpace (I : Type u) (Xs : I → Type u) (TXs : (i : I) → Topology (Xs i)) where
   TC : Topology (Σ i , Xs i)  -- (\S) dependent sum
   /- Top(Σ X i,T) ≅ Π Top(X i, T) -/
   char_Product {T : Type max u} (TT : Topology T) (f : (Σ i , Xs i) → T) :

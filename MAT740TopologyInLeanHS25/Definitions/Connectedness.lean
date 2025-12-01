@@ -136,4 +136,6 @@ theorem Connected_PathConnected : PathConnected X → Connected X := by
     rw [← source_fp, ← target_fp, constant_fp one, constant_fp zero]
   contradiction
 
+-- Products of (path)-connected spaces are (path)-connected.
+
 end MyConnected

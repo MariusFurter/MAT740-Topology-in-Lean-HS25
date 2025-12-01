@@ -82,14 +82,14 @@ theorem Open_empty : Open (∅ : Set X) := by
 /- # Instances of topologies -/
 
 /- For every type `X`, there is a topology on `X` where every set is open. -/
-instance discreteTopology (X : Type u) : Topology X where
+def discreteTopology (X : Type u) : Topology X where
   Open := fun s => True
   Open_univ := by trivial
   Open_inter := by intros ; trivial
   Open_sUnion := by intros ; trivial
 
 /- For every type `X`, there is a topology on `X` where only `∅` and `univ` are open. -/
-instance indiscreteTopology (X : Type u) : Topology X where
+def indiscreteTopology (X : Type u) : Topology X where
   Open := fun s => s = ∅ ∨ s = univ
   Open_univ := by right ; rfl
   Open_inter := by
@@ -122,7 +122,7 @@ instance indiscreteTopology (X : Type u) : Topology X where
       case inr => rw [hs2] at ht; contradiction
 
 /- Topology restricted to an open subset of space X. -/
-instance restrictionTopology [Topology X] (U : Set X) (open_U : Open U) : Topology ↥U where
+def restrictionTopology [Topology X] (U : Set X) (open_U : Open U) : Topology ↥U where
   Open := fun s => Open (U ∩ s)
   Open_univ := by
     rw [Subtype.coe_image_univ, inter_eq_self_of_subset_left fun {a} a => a]

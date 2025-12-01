@@ -48,6 +48,12 @@ def principalFilter (S : Set X) : Filter X where
 
 def properFilter (F : Filter X) : Prop := ∅ ∉ F
 
+def ultraFilter (F : Filter X) : Prop := properFilter F ∧ ∀ A, A ∈ F ∨ Aᶜ ∈ F
+
+def primeFilter (F : Filter X) : Prop := properFilter F ∧ ∀ R S, R ∪ S ∈ F → R ∈ F ∨ S ∈ F
+
+theorem ultra_iff_prime {F : Filter X} : ultraFilter F ↔ primeFilter F := by sorry
+
 def mapFilter (f : X → Y) (F : Filter X) : Filter Y where
   Sets := Set.preimage (Set.preimage f) F.Sets
   univ_Sets := univ_mem
@@ -59,6 +65,8 @@ def mapFilter (f : X → Y) (F : Filter X) : Filter Y where
       exact hx
     exact upward_closed hA w
   inter_Sets := inter_mem
+
+theorem mapFilter_ultra (f : X → Y) (F : Filter X) : ultraFilter F → ultraFilter (mapFilter f F) := by sorry
 
 def neighborhoods [Topology X] (x : X) : Set (Set X) := {U | Nbhd U x}
 
@@ -217,7 +225,7 @@ def NbhdFilter [Topology X] (x : X) : Filter X where
       exact Set.inter_subset_inter hUA2 hUB2
     use U
 
-theorem Cont_convergence [Topology X] [Topology X] (f : X → Y)
+theorem Cont_convergence [Topology X] [Topology Y] (f : X → Y)
   : Cont f ↔ ∀ (G : Filter X) (x : X), G lim x → (mapFilter f G) lim (f x) := by
     constructor
     case mp =>
