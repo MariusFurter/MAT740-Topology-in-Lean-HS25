@@ -13,7 +13,7 @@ Formalize quotient maps and some of their properties. Material in "Recognizing Q
 
 # Convergence
 
-3. [Alexander Rudenya]
+3. [Alexander Rudenya, Aron Erben]
 
 Define closure (Cl).
 
@@ -52,3 +52,13 @@ References:
 
 - Lee: Introduction to Topological Manifolds.
 - Tai-Danae Bradley et. al: Topology a Categorical Approach.
+
+# Independently proposed projects
+
+9. [Jarod Daschkewitz + Simon Baumgartner + Elina Kästle.]
+
+Formalize and prove relationships between:
+
+- sequential compactness
+- open-cover compactness
+- limit-point compactness
