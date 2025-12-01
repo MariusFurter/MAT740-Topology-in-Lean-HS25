@@ -5,7 +5,7 @@
 
 # Quotient Maps
 
-2. Formalize quotient maps and some of their properties. Material in "Recognizing Quotient Maps between Known Spaces" (Lee p. 69).
+2.[Carl] Formalize quotient maps and some of their properties. Material in "Recognizing Quotient Maps between Known Spaces" (Lee p. 69).
 
 # Convergence
 
@@ -18,11 +18,9 @@
 
 # Connected spaces
 
-4.[Aroon] - Prove that the connected subsets of R are intervals.
+4.[Aroon] - Prove that the connected subsets of R are intervals. - Corollary: Intermediate value theorem.
 
-- Corollary: Intermediate value theorem.
-
-5. Prove more properties of connected spaces (Lee Prop 4.9)
+5.[Lea + Christina + Jana] Prove more properties of connected spaces (Lee Prop 4.9)
 
 # Compactness
 

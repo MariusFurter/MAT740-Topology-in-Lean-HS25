@@ -74,7 +74,7 @@ theorem Compact_image (f : X → Y) (cont_f : Cont f) (surj_f : Function.Surject
     rw [← hc2]
     exact hc1
 
-theorem Compact_Closed_of_Compact {W : Type u} [Topology W]
+theorem Compact_Closed_of_Compact
   (compact_X : Compact (Set.univ : Set X)) (K : Set X) (closed_K : Closed K) : Compact K := by
   intro C
   let D : openCover (Set.univ : Set X) := by
