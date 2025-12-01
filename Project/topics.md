@@ -18,7 +18,7 @@
 
 # Connected spaces
 
-4.[Aroon] - Prove that the connected subsets of R are intervals. - Corollary: Intermediate value theorem.
+4.[Aroon, Äia] - Prove that the connected subsets of R are intervals. - Corollary: Intermediate value theorem.
 
 5.[Lea + Christina + Jana] Prove more properties of connected spaces (Lee Prop 4.9)
 
