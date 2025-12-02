@@ -13,7 +13,7 @@ Formalize quotient maps and some of their properties. Material in "Recognizing Q
 
 # Convergence
 
-3. [Alexander Rudenya, Aron Erben]
+3. [Alexander Rudenya, Aron Erben, David Sanchez]
 
 Define closure (Cl).
 
@@ -25,7 +25,7 @@ Define closure (Cl).
 
 # Connected spaces
 
-4. [Aroon, Äia + Leon]
+4. [Aroon, Äia + Leon, Luka + Elia]
 
 - Prove that the connected subsets of R are intervals.
 - Corollary: Intermediate value theorem.
@@ -62,3 +62,7 @@ Formalize and prove relationships between:
 - sequential compactness
 - open-cover compactness
 - limit-point compactness
+
+10. [Samuele Biscaro]
+
+A metric space X is compact iff it is totally bounded and complete.
