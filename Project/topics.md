@@ -7,7 +7,7 @@
 
 # Quotient Maps
 
-2. [Carl]
+2. [Carl, Justin]
 
 Formalize quotient maps and some of their properties. Material in "Recognizing Quotient Maps between Known Spaces" (Lee p. 69).
 
