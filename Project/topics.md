@@ -41,7 +41,7 @@ Prove more properties of connected spaces (Lee Prop 4.9)
 - Prove Heine-Borel: Subsets of R^n are compact iff they are closed and bounded.
 - Corollary: Extreme value theorem.
 
-7. [Livia]
+7. [Livia, Patrik]
 
 - If X is Hausdorff and A,B \sub X are disjoint and compact, then there are disjoint open subsets U,V \sub X with A \sub U and B \sub V. (Lee Lemma 4.34).
 - Corollary: Compact subsets of Hausdorff spaces are closed. - Corollary: Closed map lemma.
