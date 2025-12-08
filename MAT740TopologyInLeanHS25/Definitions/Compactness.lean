@@ -315,10 +315,55 @@ theorem filterCompact_iff_Compact (X : Type u) [Topology X] :
     apply hU.2
     exact hc2
 
+open Constructions
+
 /- Tychonov's theorem -/
 theorem filterCompact_iProduct {I : Type u} (Xs : I → Type u) (TXs : (i : I) → Topology (Xs i)) :
-  ∀ i, @filterCompact (Xs i) (TXs i) →
-  @filterCompact (Π i, Xs i) (Constructions.iProductTopology Xs TXs) := by sorry
+  (∀ i, @filterCompact (Xs i) (TXs i)) →
+  @filterCompact (Π i, Xs i) (iProductTopology Xs TXs) := by
+    intro h F prime_F
+    let pi := fun (i : I) (x : Π i, Xs i) ↦ x i
+    have w1 : ∀ (i : I), ∃ x : Xs i, mapFilter (pi i) F lim x := by
+      intro i
+      apply h i
+      exact mapFilter_prime (pi i) F prime_F
+    choose l hl using w1
+    use l
+    intro U nbhd_U
+    have z : ∃ (V : Set (Set (Π i, Xs i))),
+      ⋂₀ V ⊆ U ∧
+      V.Finite ∧
+      ∀ v ∈ V, ∃ (i : I) (U : Set (Xs i)), v = (pi i) ⁻¹' U ∧ Open U ∧ (l i) ∈ U
+      := by
+        obtain ⟨B,hB1,hB2,hB3⟩ := nbhd_U.1 l nbhd_U.2
+        obtain ⟨V,hV1,hV2,hV3⟩ := hB1
+        rw [hV1] at hB3
+        use V
+        refine ⟨hB3,hV2,?_⟩
+        intro v hV
+        obtain ⟨i,W,hiW⟩ := hV3 v hV
+        use i; use W
+        refine ⟨hiW.1, hiW.2, ?_⟩
+        change l ∈ (pi i) ⁻¹' W
+        rw [← hiW.1]
+        have z : B ⊆ v := by
+          rw [hV1]
+          intro y hy
+          rw [Set.mem_sInter] at hy
+          exact hy v hV
+        apply z
+        exact hB2
+    obtain ⟨V,hV1,hV2,hV3⟩ := z
+    refine upward_closed ?_ hV1
+    refine inter_mem_finite_sUnion V hV2 ?_
+    intro v hv
+    specialize hV3 v hv
+    obtain ⟨i,W,hiW1,hiW2,hiW3⟩ := hV3
+    simp only [mapFilter, filter_convergence] at hl
+    rw [hiW1]
+    apply hl
+    rw [neighborhoods]
+    exact ⟨hiW2,hiW3⟩
 
 /- This section shows a alternate attempt to define the concepts using indexed collections of sets.
 This approach does not seem to allow easy extension of covers. -/
