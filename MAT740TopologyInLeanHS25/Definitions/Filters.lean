@@ -40,9 +40,9 @@ theorem upward_closed (hA : A ∈ F) (hAB : A ⊆ B) : B ∈ F :=
 theorem inter_mem (hA : A ∈ F) (hB : B ∈ F) : A ∩ B ∈ F :=
   F.inter_Sets hA hB
 
-theorem inter_mem_finite_sUnion (C : Set (Set X)) (fin : C.Finite) :
+theorem inter_mem_finite_sInter (C : Set (Set X)) (fin : C.Finite) :
   (∀ c ∈ C, c ∈ F) → ⋂₀ C ∈ F := by
-    refine Set.Finite.induction_on C fin ?base ?step -- explain
+    refine Set.Finite.induction_on C fin ?base ?step
     case base =>
       simp only [Set.mem_empty_iff_false, IsEmpty.forall_iff,
       implies_true, Set.sInter_empty, univ_mem]
@@ -70,7 +70,7 @@ def primeFilter (F : Filter X) : Prop := properFilter F ∧ ∀ R S, R ∪ S ∈
 
 theorem prime_finite_sUnion {F : Filter X} {C : Set (Set X)} (p : primeFilter F) (fin : C.Finite) :
   ⋃₀ C ∈ F → ∃ c ∈ C, c ∈ F := by
-    refine Set.Finite.induction_on C fin ?base ?step -- explain
+    refine Set.Finite.induction_on C fin ?base ?step
     case base =>
       simp only [Set.sUnion_empty, Set.mem_empty_iff_false,
       false_and, exists_const, imp_false]

@@ -333,7 +333,7 @@ theorem filterCompact_iProduct {I : Type u} (Xs : I → Type u) (TXs : (i : I) �
     have z : ∃ (V : Set (Set (Π i, Xs i))),
       ⋂₀ V ⊆ U ∧
       V.Finite ∧
-      ∀ v ∈ V, ∃ (i : I) (U : Set (Xs i)), v = (pi i) ⁻¹' U ∧ Open U ∧ (l i) ∈ U
+      ∀ v ∈ V, ∃ (i : I) (W : Set (Xs i)), v = (pi i) ⁻¹' W ∧ Open W ∧ (l i) ∈ W
       := by
         obtain ⟨B,hB1,hB2,hB3⟩ := nbhd_U.1 l nbhd_U.2
         obtain ⟨V,hV1,hV2,hV3⟩ := hB1
@@ -355,7 +355,7 @@ theorem filterCompact_iProduct {I : Type u} (Xs : I → Type u) (TXs : (i : I) �
         exact hB2
     obtain ⟨V,hV1,hV2,hV3⟩ := z
     refine upward_closed ?_ hV1
-    refine inter_mem_finite_sUnion V hV2 ?_
+    apply inter_mem_finite_sInter V hV2
     intro v hv
     specialize hV3 v hv
     obtain ⟨i,W,hiW1,hiW2,hiW3⟩ := hV3
