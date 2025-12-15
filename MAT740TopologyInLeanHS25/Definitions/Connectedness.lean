@@ -88,7 +88,7 @@ instance : MetricSpace I where
 
 instance : Topology I := @basisTopology I metricBasis
 
-structure Path (x : X) (y : X) where
+structure Path (x y : X) where
   p : I → X
   Cont_p : Cont p
   source : p zero = x
@@ -96,7 +96,7 @@ structure Path (x : X) (y : X) where
 
 def Paths (X : Type*) [Topology X] := Σ x y : X, Path x y
 
-def mapPath {x : X} {y : X} (f : X → Y) (cont_f : Cont f) (path : Path x y) : Path (f x) (f y) where
+def mapPath {x y : X} (f : X → Y) (cont_f : Cont f) (path : Path x y) : Path (f x) (f y) where
   p := f ∘ path.p
   Cont_p := Cont_comp path.p f path.Cont_p cont_f
   source := by rw [Function.comp_apply, path.source]
