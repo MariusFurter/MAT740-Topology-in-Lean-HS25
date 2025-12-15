@@ -11,8 +11,11 @@ structure Loop (x : X) where
   source_eq_x : loop zero = x
   target_eq_x : loop one = x
 
+def Loop' (x : X) := Path x x
+
 structure homotopy {x : X} (l1 l2 : Loop x) where
   H : I × I → X
+  Cont_H : Cont H
   fixed_source : ∀ t, H ⟨t,zero⟩ = x
   fixed_target : ∀ t, H ⟨t,one⟩ = x
 
@@ -37,10 +40,10 @@ instance LoopSetoid (x : X) : Setoid (Loop x) where
     case symm => intro l1 l2; exact Homotopic_symm l1 l2
     case trans => intro l1 l2 l3; exact Homotopic_trans l1 l2 l3
 
-def LoopSpace (x : X) := Quotient (LoopSetoid x)
-
 @[simp]
 theorem LoopEquiv {x : X} (f g : Loop x) : f ≈ g ↔ Homotopic f g := by trivial
+
+def LoopSpace (x : X) := Quotient (LoopSetoid x)
 
 /-
 Working with quotients:
@@ -55,7 +58,14 @@ example {x : X} (f g : Loop x) : Quotient.mk (LoopSetoid x) f = Quotient.mk (Loo
   sorry
 
 def loop_comp {x : X} (l1 l2 : Loop x) : Loop x := by
-  sorry
+  constructor
+  case loop =>
+    intro i
+    sorry -- bad definition of I???
+    ---exact (if i.val < 1/2 then l1.loop i else l2.loop i)
+  case Cont_loop => sorry
+  case source_eq_x => sorry
+  case target_eq_x => sorry
 
 def loop_unit {x : X} : Loop x := by sorry
 
@@ -75,4 +85,4 @@ instance FundamentalGroup (x : X) : Group (LoopSpace x) where
   inv_mul_cancel := sorry
 
 variable (x : X) (f g : LoopSpace x)
-#check f*g
+#check f⁻¹ * g * 1
