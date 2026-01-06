@@ -29,7 +29,8 @@ Also helpful:
 
 open Metric
 
-theorem ball_in_ball {x : X} {ε : ℝ} : ∀ y ∈ ball x ε, ∃ δ, (0 < δ ∧ ball y δ ⊆ ball x ε) := by
+theorem ball_in_ball {X : Type u} [MetricSpace X] {x : X} {ε : ℝ} :
+∀ y ∈ ball x ε, ∃ δ, (0 < δ ∧ ball y δ ⊆ ball x ε) := by
   simp only [ball, Set.setOf_subset_setOf]
   intro y hy
   simp at hy
@@ -45,7 +46,7 @@ theorem ball_in_ball {x : X} {ε : ℝ} : ∀ y ∈ ball x ε, ∃ δ, (0 < δ �
       apply dist_triangle
     linarith
 
-instance metricBasis : Basis X where
+instance metricBasis (X : Type u) [MetricSpace X] : Basis X where
   Basics := {B | ∃ x ε, B = ball x ε}
   Basis_cover := by
     rw [Set.sUnion_eq_univ_iff]
@@ -95,14 +96,14 @@ instance metricBasis : Basis X where
         exact hz
 
 
-def metricTopology := @basisTopology X metricBasis
+def metricTopology := @basisTopology X (metricBasis X)
 
 @[simp]
 theorem Basic_balls {x : X} {ε : ℝ} : ball x ε ∈ Basis.Basics := by
   use x
   use ε
 
-def Hausdorff [Topology X] : Prop :=
+def Hausdorff (X : Type u) [Topology X] : Prop :=
   ∀ x y : X, ¬(x = y) → ∃ U V : Set X, (Nbhd U x) ∧ (Nbhd V y) ∧ U ∩ V = ∅
 
 theorem Hausdorff_metricTopology : @Hausdorff X metricTopology := by

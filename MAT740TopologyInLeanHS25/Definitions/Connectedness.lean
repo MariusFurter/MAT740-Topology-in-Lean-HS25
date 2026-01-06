@@ -86,7 +86,7 @@ instance : MetricSpace I where
     rw [SetCoe.ext_iff] at h
     exact h
 
-instance : Topology I := @basisTopology I metricBasis
+instance : Topology I := @basisTopology I (metricBasis I)
 
 structure Path (x y : X) where
   p : I → X
